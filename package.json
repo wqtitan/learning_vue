@@ -1,0 +1,22 @@
+{
+  "name": "learning_vue",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wqtitan/learning_vue.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wqtitan/learning_vue/issues"
+  },
+  "homepage": "https://github.com/wqtitan/learning_vue#readme",
+  "dependencies": {
+    "vue": "^2.6.11"
+  }
+}

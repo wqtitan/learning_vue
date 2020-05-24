@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>点击变色</title>
+    <script src="../node_modules/vue/dist/vue.js"></script>
+    <style>
+        .active {
+            color: #f00;
+            
+        }
+        li {
+            list-style-type: none;
+            font-size: 36px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <button @click="addLi">添加Z字母</button>
+        <p>点击字母，字母变成红色</p>
+        <ul>
+            <li v-for="(item, index) in letters"
+                :class="{active: currentIndex === index}"
+                @click="changeColor(index)"
+            >
+                {{ item }}
+            </li>
+        </ul>
+    </div>
+    <script>
+        let vm = new Vue({
+            el: "#app",
+            data: {
+                letters:["A", "B", "C", "D"],
+                currentIndex: -1
+            },
+            methods: {
+                changeColor: function(index) {
+                    this.currentIndex = index;
+                },
+                addLi: function() {
+                    this.letters.splice(3, 0, "Z");
+                }
+            },
+        });
+        
+    </script>
+</body>
+</html>
