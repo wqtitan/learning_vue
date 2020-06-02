@@ -1,57 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
 </head>
+
 <body>
-    
-    <div id="app">
-        {{ message }}
-        <!-- 3. 使用组件 -->
-        <cpn1></cpn1>
-        <!-- <cpn2></cpn2> --> <!-- 此处不能使用 --> 
+  <div id="app">
+    <parent-cpn></parent-cpn>
+  </div>
+
+  <template id="parentCpn">
+    <div>
+      <h2>父组件</h2>
+      <child-cpn></child-cpn>
     </div>
-    <script src="../node_modules/vue/dist/vue.js"></script>
-    <script>
-        // 1. 创建组件构造器对象(子组件)
-        const componentConstructor2 = Vue.extend({
-            template: `
-            <div>
-                <h2>我是标题2</h2>
-                <p>我是内容2</p>
-                <p>我是内容2</p>
-            </div>
-            `
-        })
-        // (父组件)         
-        const componentConstructor1 = Vue.extend({
-            template: `
-            <div>
-                <h2>我是标题1</h2>
-                <p>我是内容1</p>
-                <p>我是内容1</p>
-                <!-- 3. 在组件内使用组件 -->
-                <cpn2></cpn2>
-            </div>
-            `,
-             // 2. 注册组件，局部注册，在组件内注册(注意顺序，先创建后注册)
-            components: {
-                cpn2: componentConstructor2
-            }
-        })
-        // root组件
-        const app = new Vue({
-            el: '#app',
-            data: {
-                message: 'hello'
-            },
-            // 2. 注册组件，局部注册
-            components: {
-                cpn1: componentConstructor1
-            }
-        })
-    </script>
+  </template>
+
+  <template id="childCpn">
+    <div>
+      <h2>子组件</h2>
+    </div>
+  </template>
+
+  <script src="../node_modules/vue/dist/vue.js"></script>
+  <script>
+    let childCpn = {
+      template: "#childCpn"
+    }
+
+    let parentCpn = {
+      template: "#parentCpn",
+      components: {
+        "child-cpn": childCpn
+      }
+    }
+
+    new Vue({
+      el: "#app",
+      components: {
+        "parent-cpn": parentCpn
+      }
+    })
+  </script>
 </body>
+
 </html>

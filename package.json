@@ -17,6 +17,10 @@
   },
   "homepage": "https://github.com/wqtitan/learning_vue#readme",
   "dependencies": {
+    "@vue/cli": "^4.4.1",
     "vue": "^2.6.11"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.10.1"
   }
 }

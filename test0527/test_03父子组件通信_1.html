@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <h1>{{vueTitle}}</h1>
+    
+    <ul>
+      <li  v-for="(item, index) in letters" :key="index">{{'Vue 实例 ' +index + ' ' + item}}</li>
+    </ul>
+    <!-- <h2>{{parTitle}}</h2> -->  <!-- 报错 -->  
+    <!-- <h2>{{chiTitle}}</h2> -->  <!-- 报错 -->  
+    <parent-cpn :pletters='letters'></parent-cpn>
+  </div>
+
+  <template id="parentCpn">
+    <div>
+      <!-- <h1>{{vueTitle}}</h1> -->  <!-- 组件中不能直接访问Vue实例中的data -->  
+      <h2>{{ parTitle }}</h2>
+      <h2>id {{ buttonId }}</h2> 
+      <ul>
+        <li  v-for="(item, index) in pletters" :key="index">{{ '父组件 ' +index + ' ' + item }}</li>
+      </ul>
+      <!-- <h2>{{chiTitle}}</h2> -->  <!-- 报错 -->  
+      <child-cpn :c-letters='pletters'  @catagories-click="showId"></child-cpn>   <!--  绑定时不支持驼峰标识 -->
+      
+    </div>
+  </template>
+
+  <template id="childCpn">
+    <div>
+      <!-- <h1>{{vueTitle}}</h1> -->  <!-- 组件中不能直接访问Vue实例中的data -->  
+      <!-- <h2>{{parTitle}}</h2> -->  <!-- 报错 -->  
+      <h2>{{chiTitle}}</h2>
+      <ul>
+        <li  v-for="(item, index) in cLetters" :key="index">{{ '子组件 ' +index + ' ' + item }}</li>
+      </ul>
+      <div>
+        <button v-for="(item) in catagories" @click="btnClick(item)">{{ item.name }}</button>
+      </div>
+    </div>
+  </template>
+
+  <script src="../node_modules/vue/dist/vue.js"></script>
+  <script>
+    const childCpn = {
+      template: "#childCpn",
+      data() {
+        return {
+          chiTitle: "子组件",
+          catagories: [
+            {id:1, name: "按钮1"},
+            {id:2, name: "按钮2"},
+            {id:3, name: "按钮3"},
+          ]
+        }
+      },
+      methods: {
+        btnClick(item) {
+          this.$emit('catagories-click', item);
+
+          
+        }
+      },
+      props: {
+        cLetters:{
+          type: Array,
+          default: ['a', 'b']
+        }
+      },
+    }
+
+    const parentCpn = {
+      data() {
+        return {
+          parTitle: "父组件",
+          buttonId: this.id,
+        }
+      },
+      methods: {
+        showId(item) {
+          console.log(item.id);
+          let id = item.id;
+        }
+      },
+      props:['pletters',],
+      template: "#parentCpn",
+      components: {
+        "child-cpn": childCpn
+      }
+    }
+
+    new Vue({
+      el: "#app",
+      data: {
+        vueTitle: "Vue实例",
+        letters: ['a', 'b', 'c', 'd'],
+      },
+      components: {
+        "parent-cpn": parentCpn
+      }
+    })
+  </script>
+</body>
+
+</html>

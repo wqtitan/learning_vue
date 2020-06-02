@@ -9,28 +9,24 @@
 
 <body>
   <div id="app">
-    <!-- 3. 使用组件 -->
-    <mycpn></mycpn>
+    <!-- 2. 使用组件 -->
+    <my-cpn></my-cpn>
   </div>
   <script src="../node_modules/vue/dist/vue.js"></script>
   <script>
-    // 1. 创建组件构造器对象
-    const componentConstructor = Vue.extend({
+    // 1. 创建并注册组件，全局注册
+    Vue.component('my-cpn', {
       template: `
             <div>
                 <h2>我是标题</h2>
                 <p>我是内容</p>
+                <p>我是内容</p>
             </div>
             `
-    })
+    });
     const app = new Vue({
       el: '#app',
-      // 2. 注册组件，局部注册
-      components: {
-        mycpn: componentConstructor
-      }
     })
   </script>
 </body>
-
 </html>
