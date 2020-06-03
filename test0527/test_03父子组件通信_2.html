@@ -9,68 +9,62 @@
 
 <body>
   <div id="app">
-    <h1>{{vueTitle}}</h1>
-    <ul>
-      <li  v-for="(item, index) in letters" :key="index">{{'Vue 实例 ' +index + ' ' + item}}</li>
-    </ul>
-    <!-- <h2>{{parTitle}}</h2> -->  <!-- 报错 -->  
-    <!-- <h2>{{chiTitle}}</h2> -->  <!-- 报错 -->  
-    <parent-cpn :pletters='letters'></parent-cpn>
+    <h2 v-for="item in letters">{{ item }}</h2>
+    <!-- 一. 请求数据时绑定变量      二.发送数据时绑定监听事件 -->
+    <parent-cpn :par-letters="letters" @paremitclick="itemClick"></parent-cpn>
   </div>
 
   <template id="parentCpn">
     <div>
-      <!-- <h1>{{vueTitle}}</h1> -->  <!-- 组件中不能直接访问Vue实例中的data -->  
-      <h2>{{parTitle}}</h2>
-      <ul>
-        <li  v-for="(item, index) in pletters" :key="index">{{ '父组件 ' +index + ' ' + item }}</li>
-      </ul>
-      <!-- <h2>{{chiTitle}}</h2> -->  <!-- 报错 -->  
-      <child-cpn :cletters='pletters'></child-cpn>
+      <h2>父组件</h2>
+      <!-- 二.发送数据时绑定监听事件 -->
+      <p v-for="item in parLetters" @click="itemClick(item)">{{item}}</p>
+      <child-cpn></child-cpn>
     </div>
   </template>
 
   <template id="childCpn">
     <div>
-      <!-- <h1>{{vueTitle}}</h1> -->  <!-- 组件中不能直接访问Vue实例中的data -->  
-      <!-- <h2>{{parTitle}}</h2> -->  <!-- 报错 -->  
-      <h2>{{chiTitle}}</h2>
-      <ul>
-        <li  v-for="(item, index) in cletters" :key="index">{{ '子组件 ' +index + ' ' + item }}</li>
-      </ul>
+      <h2>子组件</h2>
     </div>
   </template>
 
   <script src="../node_modules/vue/dist/vue.js"></script>
   <script>
-    let childCpn = {
-      template: "#childCpn",
-      data() {
-        return {
-          chiTitle: "子组件",
-        }
-      },
-      props:['cletters'],
+    const childCpn = {
+      template: "#childCpn"
     }
 
-    let parentCpn = {
-      data() {
-        return {
-          parTitle: "父组件"
-        }
-      },
-      props:['pletters',],
+    const parentCpn = {
       template: "#parentCpn",
       components: {
-        "child-cpn": childCpn
-      }
+        "child-cpn": childCpn,
+      },
+      props: {   // 一.通过props选项向父组件(root组件)"请求"数据
+        parLetters: {
+          type: Array,
+          default() {
+            return ["a","b"]
+          } 
+        }
+      },
+      methods: {
+        itemClick(item) {
+          this.$emit("paremitclick", item)  // 二.通过$emit向父组件(root组件)"发出"数据
+        }
+      },
     }
 
     new Vue({
       el: "#app",
       data: {
-        vueTitle: "Vue实例",
-        letters: ['a', 'b', 'c', 'd']
+        message: "hello",
+        letters: ["a", "b", "c", "d"],
+      },
+      methods: {
+        itemClick(item) {
+          console.log(this)
+        }
       },
       components: {
         "parent-cpn": parentCpn
