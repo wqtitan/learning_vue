@@ -39,8 +39,4 @@ export default {
   text-align: center;
   height: 49px;
 }
-
-.el-icon-house {
-  font-size: 24px;
-}
 </style>
