@@ -1,0 +1,51 @@
+<!-- 
+  子组件my-list接收一个来自父级的prop数组books，
+  并且将它在name为book的slot上使用v-for指令循环，
+  同时暴露一个变量bookName。
+ -->
+
+<!-- 
+   作用域插槽的使用场景就是既可以复用子组件的slot，又可以使 slot内容不一致。
+   如果上例还在其他组件内使用，<li>的内容渲染权是由使用者掌握的，
+   而数据却可以通过临时变量（比如props）从子组件内获取。
+  -->
+<div id="app">
+  <my-list :books="books">
+    <!-- 作用域插槽也可以是具名的Slot -->
+    <template slot="book" scope="props">
+      <li>{{ props.bookName }}</li>
+    </template>
+  </my-list>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+  Vue.component('my-list', {
+    props: {
+      books: {
+        type: Array,
+        default: function () {
+          return [];
+        }
+      }
+    },
+    template: '\
+      <ul>\
+          <slot name="book"\
+              v-for="book in books"\
+              :book-name="book.name">\
+              <!-- 这里也可以写默认 slot内容 -->\
+          </slot>\
+      </ul>'
+  });
+
+  var app = new Vue({
+    el: '#app',
+    data: {
+      books: [
+        { name: '《Vue.js实战》' },
+        { name: '《JavaScript语言精粹》' },
+        { name: '《JavaScript高级程序设计》' }
+      ]
+    }
+  })
+</script>
