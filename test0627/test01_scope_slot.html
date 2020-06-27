@@ -1,0 +1,58 @@
+<div id="app">
+  <!-- 直接使用组件 -->
+  <tem-a>
+    <template v-slot:name>
+      <div>
+        Bill
+      </div>
+    </template>
+
+    <template>
+      <div>
+        Will
+      </div>
+    </template>
+  </tem-a>
+
+  <hr />
+  <!-- 使用作用域插槽 -->
+  <tem-a>
+    <template v-slot:name='slotProps'>
+      {{slotProps.user.lastName}}
+    </template>
+
+    <template v-slot:default='slotProps'>
+      {{slotProps.user.firstName}}
+    </template>
+  </tem-a>
+
+</div>
+
+<template id="tem">
+  <div>
+    <span>
+      <!-- 通过 插槽prop 向父组件传递数据 -->
+      <slot name='name' :user='user'>{{ user.firstName }}</slot>
+      <slot :user='user'>{{ user.lastName }}</slot>
+    </span>
+  </div>
+</template>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+  Vue.component('temA', {
+    template: '#tem',
+    data() {
+      return {
+        user: {
+          lastName: 'lastname',
+          firstName: 'firstname'
+        }
+      }
+    },
+  })
+
+  const app = new Vue({
+    el: '#app',
+  })
+
+</script>
