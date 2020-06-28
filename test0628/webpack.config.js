@@ -5,6 +5,7 @@
  *
  */
 const { resolve } = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 module.exports = {
   // webpack配置 5个核心
   entry: "./src/index.js",
@@ -43,6 +44,12 @@ module.exports = {
   //plugins的配置
   plugins: [
     // 详细plugins配置
+    // html-webpack-plugin
+    // 功能: 默认会创建一个空的HTML，自动引入打包输出的所有资源（JS/CSS）
+    // 使用template复制HTML
+    new HtmlWebpackPlugin({
+      template: "./src/index.html",
+    }),
   ],
   mode: "development",
   // mode: "production",
