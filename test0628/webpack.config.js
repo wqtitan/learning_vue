@@ -51,6 +51,17 @@ module.exports = {
       template: "./src/index.html",
     }),
   ],
-  mode: "development",
-  // mode: "production",
+  // mode: "development",
+  mode: "production",
+  // 开发服务器 devServer   自动编译，自动打开浏览器，自动刷新浏览器
+  // 特点: 只会在内存中编译打包，不会有任何输出
+  // 安装: npm i webpack-dev-server -D
+  // 启动: webpack-dev-server   本地安装时加npx
+  devServer: {
+    // 项目构建后的路径
+    contentBase: resolve(__dirname, "build"),
+    // 启动gzip压缩
+    compress: true,
+    port: 3000,
+  },
 };
