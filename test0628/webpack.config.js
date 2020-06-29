@@ -62,8 +62,31 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         loader: "babel-loader",
+        // 基本JS兼容性处理→ @babel/preset-env
+        // options: {
+        //   presets: ["@babel/preset-env"],
+        // },
+
+        // 按需加载→ core-js
         options: {
-          presets: ["@babel/preset-env"],
+          presets: [
+            [
+              "@babel/preset-env",
+              {
+                useBuiltIns: "usage",
+                corejs: {
+                  version: 3,
+                },
+                targets: {
+                  chrome: "60",
+                  firefox: "60",
+                  ie: "9",
+                  safari: "10",
+                  edge: "17",
+                },
+              },
+            ],
+          ],
         },
       },
     ],

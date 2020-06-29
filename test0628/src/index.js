@@ -8,6 +8,8 @@
      生产环境比开发环境多一步压缩js代码。
   3. webpack.config.js 文件
 */
+// 全部JS兼容性处理→ @babel/polyfill
+// import "@babel/polyfill";
 import "./css/index.css";
 import "./iconfont/iconfont.css";
 import "./css/index.less";
@@ -20,3 +22,12 @@ function add(x, y) {
 const a = 1;
 const b = 2;
 console.log(add(a, b));
+
+const promise = new Promise((resolve) => {
+  setTimeout(() => {
+    console.log("定时器执行完毕");
+    resolve();
+  }, 1000);
+});
+
+console.log(promise);
