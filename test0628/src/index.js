@@ -8,14 +8,15 @@
      生产环境比开发环境多一步压缩js代码。
   3. webpack.config.js 文件
 */
-import "./index.css";
+import "./css/index.css";
 import "./iconfont/iconfont.css";
-import "./index.less";
+import "./css/index.less";
 import data from "./data.json";
 console.log(data);
 
 function add(x, y) {
   return x + y;
 }
-
-console.log(add(1, 2));
+const a = 1;
+const b = 2;
+console.log(add(a, b));
