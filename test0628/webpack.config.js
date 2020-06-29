@@ -32,6 +32,10 @@ module.exports = {
       {
         exclude: /\.(js|json|html|css|less|jpg|png|gif)/,
         loader: "file-loader",
+        options: {
+          name: "[hash:8].[ext]",
+          outputPath: "iconfont",
+        },
       },
     ],
   },
