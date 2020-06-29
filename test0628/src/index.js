@@ -9,6 +9,7 @@
   3. webpack.config.js 文件
 */
 import "./index.css";
+import "./iconfont/iconfont.css";
 import "./index.less";
 import data from "./data.json";
 console.log(data);

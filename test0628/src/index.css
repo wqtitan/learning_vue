@@ -1,5 +1,16 @@
 html,
 body {
   height: 100%;
-  background-color: #f00;
+}
+#splash {
+  height: 300px;
+  background-image: url(./img/webpack-splash.png);
+  background-repeat: no-repeat;
+  background-size: auto 100%;
+}
+#box {
+  height: 100px;
+  background-image: url(./img/webpack.png);
+  background-repeat: no-repeat;
+  background-size: auto 100%;
 }

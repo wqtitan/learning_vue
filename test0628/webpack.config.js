@@ -30,6 +30,21 @@ module.exports = {
           "css-loader",
         ],
       },
+      // 处理图片资源，默认无法处理html中的img图片
+      {
+        test: /\.(jpg|png|gif)$/,
+        // 使用一个loader， 但是需要下载两个loader  url-loader依赖file-loader
+        loader: "url-loader",
+        options: {
+          limit: 8 * 1024,
+          // 给图片重命名  取hash前10位  原文件扩展名
+          name: "[hash:10].[ext]",
+        },
+      },
+      {
+        test: /\.html$/,
+        loader: "html-loader",
+      },
       {
         test: /\.less$/,
         use: [
@@ -38,6 +53,15 @@ module.exports = {
           // 将less文件编译成css文件，需要下载less-loader和less
           "less-loader",
         ],
+      },
+      // 打包其他资源
+      {
+        // 以下排除资源以外的资源都使用file-loader
+        exclude: /\.(css|js|html|jpg|png|gif|less|json)$/,
+        loader: "file-loader",
+        options: {
+          name: "[hash:10].[ext]",
+        },
       },
     ],
   },
@@ -51,8 +75,8 @@ module.exports = {
       template: "./src/index.html",
     }),
   ],
-  // mode: "development",
-  mode: "production",
+  mode: "development",
+  // mode: "production",
   // 开发服务器 devServer   自动编译，自动打开浏览器，自动刷新浏览器
   // 特点: 只会在内存中编译打包，不会有任何输出
   // 安装: npm i webpack-dev-server -D
